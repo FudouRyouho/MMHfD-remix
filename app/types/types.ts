@@ -35,10 +35,10 @@ export const bossConfigs: { [key: string]: BossConfig } = {
   // Bosses relativos
   "Selupan": { type: 'relative', timer: 34 },
   "Nightmare": { type: 'relative', timer: 40 },
-  "Nix": { type: 'relative', timer: 130 },
-  "Core Magriffy": { type: 'relative', timer: 100 },
+  "Nix": { type: 'relative', timer: 112 }, //130
+  "Core Magriffy": { type: 'relative', timer: 85 }, //100
   "Lord of Ferea": { type: 'relative', timer: 82 },
-  "Lord Silvester": { type: 'relative', timer: 90 },
+  "Lord Silvester": { type: 'relative', timer: 93 }, //90
   "God of Darkness": {type: 'relative', timer: 96},
   
   // Bosses con horario fijo
