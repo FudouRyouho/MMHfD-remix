@@ -179,7 +179,7 @@ export default function BossTracker() {
   const showAllData = useCallback(() => setSelectedBoss(null), []);
 
   return (
-    <div className="bg-zinc-900 text-zinc-100 min-h-screen p-8">
+    <div className="bg-zinc-900 text-zinc-100 p-8">
       <h1 className="text-4xl font-bold mb-8">Boss Tracker</h1>
 
       <div className="flex flex-row gap-2 my-4">
@@ -197,28 +197,34 @@ export default function BossTracker() {
         />
       </div>
 
-      <div className="w-full">
-        <table className="w-full table-auto border-white/5">
+      <div className="m-2">
+        <table className="border-white/5 border-2 w-full h-full">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className="rounded border border-white/5 p-4">
+              <tr key={headerGroup.id} className="border-b-white/5">
                 {headerGroup.headers.map((header) => (
+                <>
                   <th
                     key={header.id}
                     onClick={header.column.getToggleSortingHandler()}
-                    className="text-left text-sm font-medium uppercase tracking-wider cursor-pointer select-none"
+                    className="text-left text-sm font-medium uppercase tracking-wider cursor-pointer select-none border-l-[1px] border-l-white/5"
                   >
                     {flexRender(
                       header.column.columnDef.header,
                       header.getContext()
                     )}
+                    
                     <span className="ml-2">
                       {{
                         asc: "↑",
                         desc: "↓",
                       }[header.column.getIsSorted() as string] ?? null}
                     </span>
+                    
+
+                    
                   </th>
+                  </>
                 ))}
               </tr>
             ))}
@@ -229,7 +235,7 @@ export default function BossTracker() {
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
-                    className={`text-left text-sm ${
+                    className={`text-left text-sm border-l-[1px] border-l-white/5 ${
                       cell.column.id === "timeLeft"
                         ? cell.getValue().toString().startsWith("+")
                           ? "text-red-600"
