@@ -1,5 +1,5 @@
 import { Button } from "@headlessui/react";
-import { Loader, X } from "lucide-react";
+import { Loader, X } from "../../icons/IconBase";
 import React from "react";
 
 type UIButtonsType = "normal" | "icon" | "combined";
@@ -68,7 +68,10 @@ const UIButtons: React.FC<IProps> = ({
       disabled={switcher || disabled}
     >
       {switcher ? (
-        <Loader className="animate-spin" size={iconSize} />
+        <Loader className="animate-spin" 
+        //size={iconSize} 
+    
+        />
       ) : Icon ? (
         <Icon className={iconStyles[variant]} size={iconSize} />
       ) : null}

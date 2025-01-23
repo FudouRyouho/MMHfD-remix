@@ -4,7 +4,7 @@ import {
   ComboboxOption,
   ComboboxOptions,
 } from "@headlessui/react";
-import { Check, X } from "lucide-react";
+import { Check, X } from "../../icons/IconBase";
 import React from "react";
 
 interface IProps<T extends string> {

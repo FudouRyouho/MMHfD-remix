@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
-import { AlertCircle, CheckCircle, CircleX, Info, X } from "lucide-react";
+import { AlertCircle, CheckCircle, CircleX, Info, X } from "../../icons/IconBase";
 import { NotificationType } from "~/store/NotificationsSlice";
 import { Button } from "@headlessui/react";
 

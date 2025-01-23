@@ -4,7 +4,7 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown } from "../../../icons/IconBase";
 import React from "react";
 
 interface IProps<T extends string> {

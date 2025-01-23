@@ -1,6 +1,6 @@
 import React from "react";
 import { Input } from "@headlessui/react";
-import { RotateCcw } from "lucide-react";
+import { RotateCcw } from "./../../../icons/IconBase";
 import useNotification from "../../Notifications/Utils/useNotification";
 import { NotificationType } from "~/store/NotificationsSlice";
 import UIButtons from "../../UI/UI-Button";

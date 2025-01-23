@@ -9,7 +9,7 @@ import {
   CircleX,
   X,
   View,
-} from "lucide-react"; 
+} from "../icons/IconBase"; 
 import { Button, Input } from "@headlessui/react";
 import UIButtons from "./UI/UI-Button";
 import useNotification from "./Notifications/Utils/useNotification";
@@ -82,14 +82,14 @@ export default function StyleGuide() {
           <div className="flex flex-row gap-4 border border-white/5 p-2 rounded-lg">
             <Button className="group bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus:ring-2 focus:ring-indigo-300 focus:outline-none text-white px-4 py-2 rounded transition-all duration-300 ease-in-out inline-flex items-center">
               <ChevronRight
-                size={16}
+                //size={16}
                 className="mr-2 transition-all duration-300 ease-in-out group-hover:translate-x-1"
               />
               <span>Continuar</span>
             </Button>
             <Button className="group bg-white/5 hover:bg-white/15 active:bg-white/10 focus:ring-2 focus:ring-indigo-300 focus:outline-none text-white hover:text-indigo-300 px-4 py-2 rounded transition-all duration-300 ease-in-out inline-flex items-center">
               <Bell
-                size={16}
+                //size={16}
                 className="mr-2 transition-all duration-300 group-hover:rotate-12"
               />
               <span className="group-active:text-indigo-500 transition-colors duration-300">
@@ -102,7 +102,7 @@ export default function StyleGuide() {
             </Button>
             <Button className="group bg-white/5 hover:bg-white/15 active:bg-white/10 focus:ring-2 focus:ring-indigo-300 focus:outline-none text-white hover:text-indigo-300 px-4 py-2 rounded transition-all duration-300 ease-in-out inline-flex items-center">
               <Settings
-                size={16}
+                //size={16}
                 className="mr-2 transition-all duration-300 group-hover:rotate-90"
               />
               <span className="group-active:text-indigo-500 transition-colors duration-300">

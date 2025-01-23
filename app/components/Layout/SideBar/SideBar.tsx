@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { Link, useLocation } from "@remix-run/react";
 import {
-  HomeIcon as House,
+  House,
   List,
   Palette,
   Settings,
-} from "lucide-react";
+} from "../../icons/IconBase";
 
 interface IProps {}
 
@@ -49,7 +49,8 @@ const SideBar: React.FC<IProps> = () => {
             onClick={toggleSidebar}
             className="self-end p-2 mb-4 text-gray-500 rounded-lg hover:bg-zinc-100 dark:text-gray-400 dark:hover:bg-zinc-700"
           >
-            <List size={24} />
+            <List //size={24} 
+            />
           </button>
           <nav className="flex-grow">
             <ul className="space-y-2">
@@ -63,7 +64,8 @@ const SideBar: React.FC<IProps> = () => {
                         : ""
                     }`}
                   >
-                    <item.icon size={20} />
+                    <item.icon //size={20} 
+                    />
                     <Transition
                       show={isExpanded}
                       enter="transition-opacity duration-200"
@@ -89,7 +91,9 @@ const SideBar: React.FC<IProps> = () => {
                   : ""
               }`}
             >
-              <Settings size={20} />
+              <Settings //size={20} 
+         
+              />
               <Transition
                 show={isExpanded}
                 enter="transition-opacity duration-200"
