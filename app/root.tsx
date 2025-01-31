@@ -36,7 +36,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -48,16 +47,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   //const { isExpanded } = useSidebar();
   return (
-  
     <Provider store={store}>
-      <div className="flex">
+
         <SideBar />
-        <main className="transition-all w-screen duration-300 ease-in-out ml-16" id="main-content">
+        <main
+          className="transition-all duration-300 ease-in-out ml-16"
+          id="main-content"
+        >
           <Outlet />
         </main>
-      </div>
-      <NotificationsContainer/>
+
+      <NotificationsContainer />
     </Provider>
-  
   );
 }

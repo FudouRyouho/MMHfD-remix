@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { Link, useLocation } from "@remix-run/react";
-import {
-  House,
-  List,
-  Palette,
-  Settings,
-} from "../../icons/IconBase";
+import { House, List, Palette, Settings, Skull } from "../../icons/IconBase";
 
 interface IProps {}
 
 const SideBar: React.FC<IProps> = () => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const location = useLocation();
 
   const menuItems = [
     { icon: House, label: "Home", href: "/" },
-    { icon: House, label: "Boss Tracker", href: "bossTracker" },
+    { icon: Skull, label: "Boss Tracker", href: "bossTracker" },
     { icon: Palette, label: "Style", href: "/style" },
   ];
 
@@ -44,12 +39,12 @@ const SideBar: React.FC<IProps> = () => {
           isExpanded ? "w-48" : "w-16"
         } bg-zinc-50 dark:bg-zinc-800`}
       >
-        <div className="flex flex-col h-full px-3 py-4">
+        <div className="flex flex-col h-svh px-3 py-4">
           <button
             onClick={toggleSidebar}
             className="self-end p-2 mb-4 text-gray-500 rounded-lg hover:bg-zinc-100 dark:text-gray-400 dark:hover:bg-zinc-700"
           >
-            <List //size={24} 
+            <List className="size-7" //size={24}
             />
           </button>
           <nav className="flex-grow">
@@ -64,7 +59,7 @@ const SideBar: React.FC<IProps> = () => {
                         : ""
                     }`}
                   >
-                    <item.icon //size={20} 
+                    <item.icon className="size-5"//size={20}
                     />
                     <Transition
                       show={isExpanded}
@@ -86,13 +81,12 @@ const SideBar: React.FC<IProps> = () => {
             <Link
               to={"settings"}
               className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-700 ${
-                location.pathname === '/settings'
+                location.pathname === "/settings"
                   ? "bg-zinc-200 dark:bg-zinc-600"
                   : ""
               }`}
             >
-              <Settings //size={20} 
-         
+              <Settings className="size-5"//size={20}
               />
               <Transition
                 show={isExpanded}

@@ -1,59 +1,18 @@
 import { json, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { useEffect, useState, useMemo, useCallback } from "react";
-import {
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-  SortingState,
-  useReactTable,
-} from "@tanstack/react-table";
-import { bosses, BossLogEntry, bossConfigs } from "~/types/types";
-import {
-  parseDateString,
-  formatDate,
-  calculateTimeLeft,
-  getNextFixedSpawn,
-} from "~/utils/date";
+import { useState, useMemo, useCallback } from "react";
+import { BossLogEntry } from "~/types/types";
+import { parseDateString } from "~/utils/date";
 import axios from "axios";
 import * as cheerio from "cheerio";
-import UIComboBox from "~/components/Layout/UI/UI-Combobox";
 import UIButtons from "~/components/Layout/UI/UI-Button";
-
-// Columnas y constantes
-const columnHelper = createColumnHelper<
-  BossLogEntry & { nextSpawn: string; timeLeft: string }
->();
-const INTERVAL_DURATION = 1000; // 1 segundo
-
-const createColumns = () => [
-  columnHelper.accessor("monstruo", {
-    cell: (info) => info.getValue(),
-    header: "Boss",
-  }),
-  columnHelper.accessor("servidor", {
-    cell: (info) => info.getValue(),
-    header: "Servidor",
-  }),
-  columnHelper.accessor("fecha", {
-    cell: (info) => info.getValue(),
-    header: "Última muerte",
-  }),
-
-  columnHelper.accessor("nextSpawn", {
-    cell: (info) => info.getValue(),
-    header: "Próxima aparición",
-  }),
-  columnHelper.accessor("timeLeft", {
-    cell: (info) => info.getValue(),
-    header: "Tiempo restante",
-  }),
-  columnHelper.accessor("mapa", {
-    cell: (info) => info.getValue(),
-    header: "Mapa",
-  }),
-];
+import UITable from "~/components/Layout/UI/UI-Table";
+import { useBossTable } from "~/components/utils/useBossTable";
+import { useTimer } from "~/components/utils/useTimer";
+import { useSelector } from "react-redux";
+import { selectConfig } from "~/store/configSlince";
+import UICheckboxList from "~/components/Layout/UI/UI-CheckBox";
+import UIListBox from "~/components/Layout/UI/UI-SelectList";
 
 export const loader: LoaderFunction = async () => {
   try {
@@ -101,155 +60,57 @@ export const loader: LoaderFunction = async () => {
 };
 
 export default function BossTracker() {
+  const config = useSelector(selectConfig);
+  const bosses = config.bosses;
+  const { selectionType } = config;
   const { data } = useLoaderData<typeof loader>();
-  const [selectedBoss, setSelectedBoss] = useState<string>("");
-  const [currentTime, setCurrentTime] = useState(() => new Date());
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const currentTime = useTimer(1000); // Usamos el hook para manejar la hora UTC-3
 
-  const columns = useMemo(() => createColumns(), []);
+  // Estado para las selecciones en CheckboxList y Listbox
+  const [selectedBosses, setSelectedBosses] = useState<string[]>([]); // Para los checkbox
+  const [selectedBossesList, setSelectedBossesList] = useState<string>('');
+
+  // Filtrar los datos basados en los dos filtros
   const filteredData = useMemo(() => {
-    if (!selectedBoss) return data;
-    return data.filter((entry) => entry.monstruo === selectedBoss);
-  }, [data, selectedBoss]);
+    if (selectedBosses.length === 0 && !selectedBossesList) return data; // Si no se seleccionan jefes, muestra todos
+    return data.filter((entry) => selectedBosses.includes(entry.monstruo) || entry.monstruo === selectedBossesList); // Filtra si el monstruo está en selectedBosses o en selectedBossesList
+  }, [data, selectedBosses, selectedBossesList]);
 
-  const tableData = useMemo(() => {
-    return filteredData.map((entry) => {
-      const bossConfig = bossConfigs[entry.monstruo];
-      let nextSpawnDate: Date;
-      let nextSpawnStr: string;
-
-      if (bossConfig?.type === "fixed") {
-        nextSpawnDate = getNextFixedSpawn(bossConfig.schedule!, currentTime);
-        nextSpawnStr = formatDate(nextSpawnDate);
-      } else if (bossConfig?.type === "relative") {
-        const deathDate = parseDateString(entry.fecha);
-        nextSpawnDate = new Date(
-          deathDate.getTime() + bossConfig.timer! * 60 * 60 * 1000
-        );
-        nextSpawnStr = formatDate(nextSpawnDate);
-      } else {
-        nextSpawnStr = "No configurado";
-      }
-
-      const { timeStr, isPast } = calculateTimeLeft(
-        entry.fecha,
-        entry.monstruo,
-        currentTime,
-        bossConfigs
-      );
-
-      return {
-        ...entry,
-        nextSpawn: nextSpawnStr,
-        timeLeft: `${isPast ? "+" : "-"}${timeStr}`,
-      };
-    });
-  }, [filteredData, currentTime]);
-
-  const table = useReactTable({
-    data: tableData,
-    columns,
-    state: { sorting },
-    onSortingChange: setSorting,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-  });
-
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-
-    const updateTime = () => setCurrentTime(new Date());
-    const now = new Date();
-    const delay = 1000 - now.getMilliseconds();
-    const timeoutId = setTimeout(() => {
-      updateTime();
-      intervalId = setInterval(updateTime, INTERVAL_DURATION);
-    }, delay);
-
-    return () => {
-      clearTimeout(timeoutId);
-      clearInterval(intervalId);
-    };
+  const { table } = useBossTable(filteredData, currentTime);
+  const showAllData = useCallback(() => {
+    setSelectedBosses([]);
+    setSelectedBossesList('');
   }, []);
-
-  const filterByBoss = useCallback(
-    (bossName: string) => setSelectedBoss(bossName),
-    []
-  );
-  const showAllData = useCallback(() => setSelectedBoss(null), []);
-
   return (
-    <div className="bg-zinc-900 text-zinc-100 p-8">
-      <h1 className="text-4xl font-bold mb-8">Boss Tracker</h1>
+    <div className="w-full bg-zinc-900 text-zinc-100 p-4 sm:p-8">
+      <h1 className="text-4xl font-bold mb-8 sm:text-3xl">Boss Tracker</h1>
 
       <div className="flex flex-row gap-2 my-4">
         <UIButtons
           text="All"
           variant="primary"
           onClick={showAllData}
-          disabled={selectedBoss === null}
+          disabled={selectedBosses.length === 0 && !selectedBossesList}
         />
-        <UIComboBox
-          label={selectedBoss}
-          options={bosses}
-          value={selectedBoss}
-          onChange={setSelectedBoss}
-        />
+        
+        {selectionType === "checkbox" ? (
+          <UICheckboxList
+            options={bosses}
+            value={selectedBosses}
+            onChange={setSelectedBosses}
+          />
+        ) : (
+          <UIListBox
+            label={selectedBossesList ? selectedBossesList : 'Select Boss'}
+            options={bosses}
+            value={selectedBossesList}
+            onChange={setSelectedBossesList}
+          />
+        )}
       </div>
 
       <div className="m-2">
-        <table className="border-white/5 border-2 w-full h-full">
-          <thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className="border-b-white/5">
-                {headerGroup.headers.map((header) => (
-                <>
-                  <th
-                    key={header.id}
-                    onClick={header.column.getToggleSortingHandler()}
-                    className="text-left text-sm font-medium uppercase tracking-wider cursor-pointer select-none border-l-[1px] border-l-white/5"
-                  >
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                    
-                    <span className="ml-2">
-                      {{
-                        asc: "↑",
-                        desc: "↓",
-                      }[header.column.getIsSorted() as string] ?? null}
-                    </span>
-                    
-
-                    
-                  </th>
-                  </>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody className="text-zinc-400">
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="">
-                {row.getVisibleCells().map((cell) => (
-                  <td
-                    key={cell.id}
-                    className={`text-left text-sm border-l-[1px] border-l-white/5 ${
-                      cell.column.id === "timeLeft"
-                        ? cell.getValue().toString().startsWith("+")
-                          ? "text-red-600"
-                          : "text-green-600"
-                        : ""
-                    }`}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <UITable table={table} />
       </div>
     </div>
   );

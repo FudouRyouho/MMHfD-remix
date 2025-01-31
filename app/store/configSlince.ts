@@ -1,3 +1,4 @@
+//app\store\configSlince.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { customConfig, defaultConfig } from "~/config/customConfig";
 import { RootState } from "./store";
