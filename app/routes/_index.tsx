@@ -1,8 +1,9 @@
-export default function Index() {
+import AccordionPlayground from "~/test/test";
 
+export default function Index() {
   return (
     <div>
-      <h1>Page in Process</h1>
+      <AccordionPlayground/>
     </div>
   );
 }

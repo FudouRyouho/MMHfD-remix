@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from "react";
 import { AlertCircle, CheckCircle, CircleX, Info, X } from "../../icons/IconBase";
-import { NotificationType } from "~/store/NotificationsSlice";
+import { NotificationChannel, NotificationType } from "~/store/NotificationsSlice";
 import { Button } from "@headlessui/react";
 
 
@@ -11,13 +11,13 @@ interface IProps {
     icon?: React.ReactNode;
     onClose: () => void;
     duration?: number;
+    channel?: NotificationChannel;
 }
 
 const defaultIcons: Record<NotificationType, React.ReactNode> = {
     success: <CheckCircle className="mr-2"/>,
     error: <CircleX className="mr-2"/>,
     warning: <Info className="mr-2"/>,
-
     info: <AlertCircle className="mr-2"/>,
 }
 
@@ -30,7 +30,7 @@ const typeStyles: Record<NotificationType, string> = {
 
   }
 
-const NotificationPush : React.FC<IProps> = ({type, message, icon, onClose, duration = 5000}) => {
+const NotificationPush : React.FC<IProps> = ({type, message, icon, onClose, duration = 5000, channel = 'web'}) => {
     const [isVisible, setIsVisible] = useState(true)
     const timerRef = useRef<NodeJS.Timeout | null>(null)
 

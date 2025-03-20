@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState } from 'react';
 type SidebarContextType = {
   isExpanded: boolean;
   toggleSidebar: () => void;
+  
 };
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);

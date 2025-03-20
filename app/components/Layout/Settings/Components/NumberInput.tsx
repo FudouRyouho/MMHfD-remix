@@ -1,7 +1,7 @@
 import React from "react";
 import { Input } from "@headlessui/react";
 import { RotateCcw } from "./../../../icons/IconBase";
-import useNotification from "../../Notifications/Utils/useNotification";
+import useNotification from "../../../../hooks/useNotification";
 import { NotificationType } from "~/store/NotificationsSlice";
 import UIButtons from "../../UI/UI-Button";
 

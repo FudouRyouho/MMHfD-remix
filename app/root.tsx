@@ -12,6 +12,11 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import SideBar from "./components/Layout/SideBar/SideBar";
 import NotificationsContainer from "./components/Layout/Notifications/NotificationsContainer";
+import {
+  SidebarProvider,
+  useSidebar,
+} from "./components/Layout/SideBar/sidebarContext";
+import AccordionPlayground from "./test/test";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -28,7 +33,7 @@ export const links: LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -45,19 +50,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  //const { isExpanded } = useSidebar();
   return (
     <Provider store={store}>
-
+      <SidebarProvider>
         <SideBar />
         <main
-          className="transition-all duration-300 ease-in-out ml-16"
+          className="transition-all duration-300 ease-in-out ml-16 p-8"
           id="main-content"
         >
           <Outlet />
         </main>
 
-      <NotificationsContainer />
+        <NotificationsContainer />
+      </SidebarProvider>
     </Provider>
   );
 }

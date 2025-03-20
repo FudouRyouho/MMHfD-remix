@@ -4,9 +4,158 @@
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
-
+  @apply background;
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
+}
+/* Texto */
+.text-primary {
+  @apply text-gray-900 dark:text-zinc-100;
+}
+.text-secondary {
+  @apply text-gray-500 dark:text-zinc-400;
+}
+
+.text-accent {
+@apply text-indigo-500
+}
+
+/* Estilos generales */
+.background {
+  @apply bg-white dark:bg-zinc-900;
+}
+
+.onBackground {
+  @apply bg-gray-100 dark:bg-zinc-800;
+}
+
+.border-full {
+  @apply border border-black/10 dark:border-white/5;
+}
+
+.border-semi {
+@apply w-[80%] h-[1px] border border-black/15 dark:border-white/10 my-2 mx-4
+}
+
+/* Acemtos de color */
+.accentPrimary {
+  @apply bg-indigo-500 text-white dark:text-zinc-100;
+}
+.accentSecondary {
+  @apply bg-emerald-500 text-white dark:text-zinc-100;
+}
+
+/* Estilos para botones */
+.btn-base {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded transition-all duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-icon {
+  @apply transition-all duration-200 ease-in-out group-hover:scale-110;
+}
+
+.btn-primary {
+  @apply btn-base accentPrimary hover:bg-indigo-600 active:bg-indigo-700 focus:ring-2 focus:ring-indigo-300 focus:outline-none;
+}
+
+.btn-secondary {
+  @apply btn-base bg-black/10 dark:bg-white/5 hover:bg-black/20 dark:hover:bg-white/15 active:bg-gray-400 dark:active:bg-white/10 focus:ring-2 focus:ring-indigo-300 focus:outline-none text-secondary hover:text-indigo-500;
+}
+
+/* Estilos para inputs */
+.form-input {
+  @apply onBackground data-[hover]:bg-black/15 dark:data-[hover]:bg-white/15 border border-full data-[hover]:border-indigo-500 data-[hover]:ring-indigo-500/20 data-[focus]:border-indigo-300 outline-none p-2 rounded w-full transition-all duration-300 ease-in-out;
+}
+
+/* Estilos para notificaciones */
+.notification-base {
+  @apply w-full p-4 rounded flex justify-between border border-full;
+}
+
+.notification-success {
+  @apply notification-base bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300;
+}
+
+.notification-error {
+  @apply notification-base bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-300;
+}
+
+.notification-warning {
+  @apply notification-base bg-yellow-100 dark:bg-yellow-500/10 text-yellow-700 dark:text-yellow-300;
+}
+
+.notification-info {
+  @apply notification-base bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300;
+}
+
+/* Accordion */
+
+.accordion {
+  @apply border-full background w-full h-full overflow-hidden text-primary transition-all duration-150 ease-in-out;
+}
+
+.accordion-body {
+  @apply onBackground py-4 px-5 border-full overflow-hidden text-secondary transition-all duration-150 ease-in-out;
+}
+
+.accordion-button {
+  @apply btn-base w-full h-full border-[1px] border-transparent flex hover:border-white/15 hover:bg-white/15 active:bg-white/10 active:text-indigo-300 hover:text-indigo-300 justify-between;
+}
+
+.accordion-button {
+  justify-content: space-between !important;
+}
+
+.accordion-header {
+}
+
+.accordion-item {
+}
+
+
+/* Sidebar */
+
+.sidebar {
+@apply onBackground fixed top-0 left-0 z-40 h-screen transition-all duration-300 ease-in-out
+}
+
+.sidebar-body {
+@apply flex flex-col h-svh px-3 py-4
+}
+
+.sidebar .btn {
+@apply btn-base
+}
+
+.sidebar .btn-back {
+@apply btn-base text-secondary p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-700
+}
+
+.sidebar-body .frame {
+@apply flex flex-row justify-between items-center mb-4
+}
+
+.sidebar-body-item {
+@apply flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-700 cursor-pointer
+}
+
+/* ChecBox */
+
+.check-box {
+@apply onBackground  text-primary border-full p-2 rounded-lg select-none w-full h-full
+}
+
+.check-box .btn-body {
+@apply flex flex-row items-center gap-2 cursor-pointer p-2 hover:bg-white/10 rounded-lg w-full
+}
+
+.check-box .btn-body .btn-check {
+@apply flex items-center justify-center border border-white/30 rounded bg-gray-300 dark:bg-zinc-700 data-[checked]:bg-indigo-500
+}
+
+/* Tables */
+
+.table-bg {
+@apply bg-black/10 dark:odd:bg-white/5 even:bg-black/15 dark:even:bg-white/10
 }

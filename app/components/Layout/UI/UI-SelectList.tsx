@@ -9,7 +9,7 @@ import React from "react";
 
 interface IProps<T extends string> {
   label: string;
-  options: T[];
+  options: T[] | ReadonlyArray<T>;
   value: T;
   onChange: (value: T) => void;
 }

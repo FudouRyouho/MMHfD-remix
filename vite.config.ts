@@ -20,6 +20,14 @@ export default defineConfig({
         v3_singleFetch: true,
         v3_lazyRouteDiscovery: true,
       },
+      /*
+      routes(defineRoutes) {
+        return defineRoutes((route) => {
+          route("Helpers/BossTracker", "routes/Helpers/BossTracker.tsx");
+          route("settings", "components/Layout/Settings/Settings.tsx");
+          route("Guides/PentagramGuides", "routes/guides/PentagramGuides.tsx");
+        });
+      },*/
     }),
     tsconfigPaths(),
   ],
@@ -27,7 +35,7 @@ export default defineConfig({
     minify: "terser",
     rollupOptions: {
       treeshake: {
-        moduleSideEffects: 'no-external', // Optimiza el tree shaking para módulos externos
+        moduleSideEffects: "no-external", // Optimiza el tree shaking para módulos externos
       },
     },
   },

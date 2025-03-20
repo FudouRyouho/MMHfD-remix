@@ -1,19 +1,53 @@
-import React, { useEffect, useState } from "react";
-import { Transition } from "@headlessui/react";
+import React, { useState, useEffect } from "react";
+import { Button, Transition } from "@headlessui/react";
 import { Link, useLocation } from "@remix-run/react";
-import { House, List, Palette, Settings, Skull } from "../../icons/IconBase";
+import {
+  Book,
+  ChevronLeft,
+  ChevronRight,
+  Diamond,
+  House,
+  List,
+  Pentagon,
+  Settings,
+  Skull,
+  SquareMousePointer,
+} from "~/components/icons/IconBase";
+import { useSidebar } from "./sidebarContext";
+import DarkModeToggle from "../UI/DarkMode";
+import classNames from "classnames";
 
-interface IProps {}
+interface MenuItem {
+  icon: React.ElementType;
+  label: string;
+  href?: string;
+  children?: MenuItem[];
+}
 
-const SideBar: React.FC<IProps> = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
+const menuItems: MenuItem[] = [
+  { icon: House, label: "Home", href: "/" },
+  {
+    icon: SquareMousePointer,
+    label: "Helpers",
+    children: [
+      { icon: Skull, label: "Boss Tracker", href: "/Helpers/BossTracker" },
+    ],
+  },
+  {
+    icon: Book,
+    label: "Guides",
+    children: [
+      { icon: Pentagon, label: "Pentagram", href: "/Guides/PentagramGuides" },
+      { icon: Diamond, label: "Seeds", href: "/Guides/Seeds" },
+    ],
+  },
+];
+
+const SideBar: React.FC = () => {
+  const { isExpanded, toggleSidebar } = useSidebar();
+  const [currentItems, setCurrentItems] = useState(menuItems);
+  const [history, setHistory] = useState<MenuItem[][]>([]);
   const location = useLocation();
-
-  const menuItems = [
-    { icon: House, label: "Home", href: "/" },
-    { icon: Skull, label: "Boss Tracker", href: "bossTracker" },
-    { icon: Palette, label: "Style", href: "/style" },
-  ];
 
   useEffect(() => {
     const appContainer = document.getElementById("main-content");
@@ -28,39 +62,55 @@ const SideBar: React.FC<IProps> = () => {
     }
   }, [isExpanded]);
 
-  const toggleSidebar = () => {
-    setIsExpanded(!isExpanded);
+  const handleItemClick = (item: MenuItem) => {
+    if (item.children) {
+      setHistory((prev) => [...prev, currentItems]);
+      setCurrentItems(item.children);
+    }
+  };
+
+  const handleBack = () => {
+    if (history.length > 0) {
+      const previousItems = history[history.length - 1];
+      setCurrentItems(previousItems);
+      setHistory((prev) => prev.slice(0, -1));
+    }
   };
 
   return (
-    <>
-      <aside
-        className={`fixed top-0 left-0 z-40 h-screen transition-all duration-300 ease-in-out ${
-          isExpanded ? "w-48" : "w-16"
-        } bg-zinc-50 dark:bg-zinc-800`}
-      >
-        <div className="flex flex-col h-svh px-3 py-4">
-          <button
-            onClick={toggleSidebar}
-            className="self-end p-2 mb-4 text-gray-500 rounded-lg hover:bg-zinc-100 dark:text-gray-400 dark:hover:bg-zinc-700"
-          >
-            <List className="size-7" //size={24}
-            />
-          </button>
-          <nav className="flex-grow">
-            <ul className="space-y-2">
-              {menuItems.map((item) => (
-                <li key={item.href}>
+    <aside className={` ${isExpanded ? "w-48" : "w-18"} sidebar`}>
+      <div className="sidebar-body">
+        <div className="frame">
+          {isExpanded && <DarkModeToggle />}
+
+          <Button onClick={toggleSidebar} className="btn-back">
+          {isExpanded ? <ChevronLeft size={28}/> : <ChevronRight size={28}/>}
+          </Button>
+        </div>
+        <nav className="flex-grow">
+          {isExpanded && history.length > 0 && (
+            <button onClick={handleBack} className="sidebar-body-item">
+              
+              <ChevronLeft size={18} />
+              <span className="ml-3">Back</span>
+            </button>
+          )}
+          <ul>
+            {currentItems.map((item) => (
+              <li key={item.label}>
+                {item.href ? (
                   <Link
                     to={item.href}
-                    className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-700 ${
-                      location.pathname === item.href
-                        ? "bg-zinc-200 dark:bg-zinc-600"
-                        : ""
-                    }`}
+                    className={classNames(
+                      "sidebar-body-item",
+                      {
+                        "bg-zinc-200 dark:bg-zinc-600":
+                          location.pathname === item.href,
+                      },
+                      { "justify-center": !isExpanded }
+                    )}
                   >
-                    <item.icon className="size-5"//size={20}
-                    />
+                    <item.icon size={18} />
                     <Transition
                       show={isExpanded}
                       enter="transition-opacity duration-200"
@@ -73,37 +123,57 @@ const SideBar: React.FC<IProps> = () => {
                       <span className="ml-3">{item.label}</span>
                     </Transition>
                   </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <div className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700">
-            <Link
-              to={"settings"}
-              className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-700 ${
-                location.pathname === "/settings"
-                  ? "bg-zinc-200 dark:bg-zinc-600"
-                  : ""
-              }`}
+                ) : (
+                  <div
+                    className={classNames('sidebar-body-item', {'justify-center' : !isExpanded})}
+                    onClick={() => handleItemClick(item)}
+                  >
+                    <item.icon size={18} />
+                    <Transition
+                      show={isExpanded}
+                      enter="transition-opacity duration-200"
+                      enterFrom="opacity-0"
+                      enterTo="opacity-100"
+                      leave="transition-opacity duration-200"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <span className="ml-3">{item.label}</span>
+                    </Transition>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700">
+          <Link
+            to={"Settings"}
+            className={classNames(
+              "sidebar-body-item",
+              {
+                "bg-zinc-200 dark:bg-zinc-600":
+                  location.pathname === "/Settings",
+              },
+              { "justify-center": !isExpanded }
+            )}
+          >
+            <Settings size={18} />
+            <Transition
+              show={isExpanded}
+              enter="transition-opacity duration-200"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-opacity duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
             >
-              <Settings className="size-5"//size={20}
-              />
-              <Transition
-                show={isExpanded}
-                enter="transition-opacity duration-200"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <span className="ml-3">Settings</span>
-              </Transition>
-            </Link>
-          </div>
+              <span className="ml-3">Settings</span>
+            </Transition>
+          </Link>
         </div>
-      </aside>
-    </>
+      </div>
+    </aside>
   );
 };
 

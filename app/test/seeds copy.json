@@ -1,0 +1,276 @@
+{
+    "seeds": {
+        "info": {
+            "weapon": {
+                "Fire": {
+                    "Add Damage By Level": {
+                        "beta": [
+                            320,
+                            340,
+                            360,
+                            380,
+                            400,
+                            420
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Speed": {
+                        "beta": [
+                            130
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Max Damage": {
+                        "beta": [
+                            800
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Min Damage": {
+                        "beta": [
+                            500
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Damage": {
+                        "beta": [
+                            700,
+                            800,
+                            900,
+                            1000,
+                            1100,
+                            1200
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Sub BP Consumption rate": {
+                        "beta": [
+                            56
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    }
+                },
+                "Ice": {
+                    "Add Hunt HP": {
+                        "beta": [
+                            "NA"
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Hunt MP": {
+                        "beta": [
+                            400
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Skill Damage": {
+                        "beta": [
+                            "NA"
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Attack Success Rate": {
+                        "beta": [
+                            2000
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Item Durabilitty Rate": {
+                        "beta": [
+                            45
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    }
+                },
+                "Lightning": {
+                    "Add Excellent Damage": {
+                        "beta": [
+                            500
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Excellent Damage Rate": {
+                        "beta": [
+                            11
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Critical Damage": {
+                        "beta": [
+                            700
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Critical Damage Rate": {
+                        "beta": [
+                            8
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    }
+                }
+            },
+            "set": {
+                "Wind": {
+                    "Add HP Recovery": {
+                        "beta": [
+                            1600
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Max HP": {
+                        "beta": [
+                            8000
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Max MP": {
+                        "beta": [
+                            7500
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add MP Recovery": {
+                        "beta": [
+                            3500
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Max BP": {
+                        "beta": [
+                            700
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add BP Recovery": {
+                        "beta": [
+                            50
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    }
+                },
+                "Water": {
+                    "Mui Defense Success Rate": {
+                        "beta": [
+                            22
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Defense": {
+                        "beta": [
+                            1300
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Shield Damage Reduction": {
+                        "beta": [
+                            103
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Damage Reduction": {
+                        "beta": [
+                            5
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Damage Reflect": {
+                        "beta": [
+                            5
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    }
+                },
+                "Earth": {
+                    "Add Strength": {
+                        "beta": [
+                            600
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Dexterity": {
+                        "beta": [
+                            300
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Vitality": {
+                        "beta": [
+                            1800
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    },
+                    "Add Energy": {
+                        "beta": [
+                            600
+                        ],
+                        "classic": [
+                            "NA"
+                        ]
+                    }
+                }
+            }
+        },
+        "craft": {
+            "runes": [
+            ]
+        }
+    }
+}
