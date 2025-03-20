@@ -17,7 +17,7 @@ const AccordionPlayground: React.FC = () => {
           <Accordion alwaysOpen>
             <Accordion.Item eventKey="3">
               <Accordion.Header>
-                v0.03 <p className="text-accent">Dios quiera que pronto</p>
+                v0.03 <p className="text-accent">20/03/2025</p>
               </Accordion.Header>
               <Accordion.Body>
                 <p className="">
